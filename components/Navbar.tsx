@@ -91,13 +91,16 @@ const Navbar = () => {
           </DropdownMenuContent>
         </DropdownMenu>
       ) : (
+
         <div className="flex gap-5 items-center">
+          <Link href={"/login"}>
           <Button
             color="secondary"
             className="w-[150px] bg-black text-white py-8 rounded-full"
           >
             <span className="text-2xl">Signin</span>
           </Button>
+          </Link>
         </div>
       )}
     </nav>
