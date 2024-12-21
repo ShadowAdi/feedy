@@ -27,19 +27,9 @@ import { useToast } from "@/hooks/use-toast";
 import { useParams } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { FeedbackStatus, FeedbackType } from "@/lib/enum";
 
-// Define enums for feedback type and status
-export enum FeedbackType {
-  BUG = "bug",
-  GENERAL_INFORMATION = "generalInformation",
-  FEATURE = "feature",
-}
 
-export enum FeedbackStatus {
-  NEW = "new",
-  IN_PROGRESS = "inProgress",
-  RESOLVED = "resolved",
-}
 
 const formSchema = z.object({
   description: z.string().min(10, {
