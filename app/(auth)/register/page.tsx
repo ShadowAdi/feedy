@@ -231,7 +231,7 @@ const Register = () => {
         </form>
       </Form>
       <Divider />
-      <div className="flex w-full items-center justify-center">
+      <div className="flex w-full items-center gap-3 justify-center">
         <p className="text-base ">Already Have an Account</p>
         <Link href="/login">Login</Link>
       </div>
