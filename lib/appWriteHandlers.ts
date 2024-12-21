@@ -118,7 +118,12 @@ export const loginWithGoogle = async (): Promise<{
   session?: any;
 }> => {
   try {
-    const session = await account.createOAuth2Session(OAuthProvider.Google);
+    const session = account.createOAuth2Session(
+      OAuthProvider.Google,
+      "https://feedy-nine.vercel.app/dashboard",
+      "https://feedy-nine.vercel.app/register"
+    );
+
     return {
       message: "User Login Successful",
       success: true,
