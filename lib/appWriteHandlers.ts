@@ -10,11 +10,10 @@ import {
   CreateFeedbackParams,
   CreateFeedbackResponse,
   FeedbackProps,
-  FeedbackStatus,
-  FeedbackType,
   ProjectType,
 } from "./types";
 import { Query } from "appwrite";
+import { FeedbackStatus, FeedbackType } from "./enum";
 
 interface CreateUserProps {
   email: string;

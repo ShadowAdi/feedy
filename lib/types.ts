@@ -1,4 +1,5 @@
 import { Models } from "appwrite";
+import { FeedbackStatus, FeedbackType } from "./enum";
 
 export interface ProjectType {
   $collectionId: string;
@@ -54,17 +55,7 @@ export const tableColumns = [
   },
 ];
 
-export enum FeedbackStatus {
-  NEW = "new",
-  IN_PROGRESS = "inProgress",
-  RESOLVED = "resolved",
-}
 
-export enum FeedbackType {
-  BUG = "bug",
-  GENERAL_INFORMATION = "generalInformation",
-  FEATURE = "feature",
-}
 
 // Interface for function parameters
 export interface CreateFeedbackParams {
