@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -10,13 +11,13 @@ import { useGlobalContext } from "@/context/UserContext";
 import { GetUser, UpdateProfile } from "@/lib/appWriteHandlers";
 import { uploadAvatar } from "@/lib/uploadFile";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 // Updated schema to handle File instead of FileList
 const formSchema = z.object({
   username: z.string().min(2).max(50),
   bio: z.string().optional(),
-  // Remove the FileList handling from the schema since we'll handle it separately
-  avatar: z.any().optional(), // We'll handle file validation separately
+  avatar: z.any().optional(),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -28,10 +29,14 @@ const UpdatePage = () => {
   const [previewUrl, setPreviewUrl] = useState<string>("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const { toast } = useToast();
+  const router = useRouter();
 
-  if (!isLogged) {
-    window.location.href = "/login";
-  }
+  // Redirect to login if the user is not logged in
+  useEffect(() => {
+    if (!isLogged && typeof window !== "undefined") {
+      router.push("/login");
+    }
+  }, [isLogged, router]);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -78,7 +83,7 @@ const UpdatePage = () => {
       // Handle file upload if new avatar is provided
       if (selectedFile) {
         const uploadResult = await uploadAvatar(selectedFile);
-        
+
         if (!uploadResult.success) {
           toast({
             title: "Error uploading avatar",
@@ -88,7 +93,7 @@ const UpdatePage = () => {
           setIsSubmitting(false);
           return;
         }
-        
+
         avatarUrl = uploadResult.fileUrl || "";
       }
 
@@ -102,7 +107,7 @@ const UpdatePage = () => {
         title: "Profile updated successfully",
       });
 
-      window.location.href = "/profile";
+      router.push("/profile");
     } catch (error: any) {
       toast({
         title: "Error updating profile",
@@ -145,7 +150,7 @@ const UpdatePage = () => {
             required
           />
         </div>
-        
+
         <div className="mb-4 space-y-4">
           {previewUrl && (
             <div className="relative w-24 h-24 mx-auto rounded-full overflow-hidden">
@@ -164,7 +169,6 @@ const UpdatePage = () => {
               const file = e.target.files?.[0];
               if (file) {
                 setSelectedFile(file);
-                // Cleanup old preview URL if it exists
                 if (previewUrl) {
                   URL.revokeObjectURL(previewUrl);
                 }
