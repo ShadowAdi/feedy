@@ -38,7 +38,7 @@ const SingleProject = () => {
   };
 
   const copyUrl =
-    `${process.env.NEXT_PUBLIC_FRONTEND_URL}/feedbacks/create/${projectId}
+    `https://feedy-nine.vercel.app/feedbacks/create/${projectId}
   `.trim();
 
   useEffect(() => {
