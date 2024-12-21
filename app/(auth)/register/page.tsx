@@ -19,6 +19,8 @@ import { createUser } from "@/lib/appWriteHandlers";
 import { useToast } from "@/hooks/use-toast";
 import { useGlobalContext } from "@/context/UserContext";
 import { uploadAvatar } from "@/lib/uploadFile";
+import { Divider } from "@nextui-org/divider";
+import GoogleLogn from "@/components/GoogleLogn";
 
 // Define the form schema with proper types
 const formSchema = z.object({
@@ -29,7 +31,7 @@ const formSchema = z.object({
   avatar: z
     .custom<FileList>()
     .optional()
-    .transform(val => val && val.length > 0 ? val[0] : undefined),
+    .transform((val) => (val && val.length > 0 ? val[0] : undefined)),
 });
 
 // Define type for form values
@@ -61,7 +63,7 @@ const Register = () => {
     // Handle file upload if avatar is provided
     if (values.avatar) {
       const uploadResult = await uploadAvatar(values.avatar);
-      
+
       if (!uploadResult.success) {
         toast.toast({
           title: "Error uploading avatar",
@@ -71,7 +73,7 @@ const Register = () => {
         setIsSubmitting(false);
         return;
       }
-      
+
       avatarUrl = uploadResult.fileUrl || "";
     }
 
@@ -98,7 +100,7 @@ const Register = () => {
       });
       window.location.href = "/dashboard";
     }
-    
+
     setIsSubmitting(false);
   }
 
@@ -111,7 +113,84 @@ const Register = () => {
           className="space-y-8 w-full"
         >
           {/* Username, email, password, and bio fields remain the same */}
-          
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input placeholder="adi@gmail.com" {...field} />
+                </FormControl>
+                <FormDescription>
+                  This is your public display Email.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Password</FormLabel>
+                <FormControl>
+                  <Input type="password" placeholder="****" {...field} />
+                </FormControl>
+                <FormDescription>
+                  This is your public display Password.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="username"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Username</FormLabel>
+                <FormControl>
+                  <Input type="text" placeholder="Adi" {...field} />
+                </FormControl>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+<FormField
+            control={form.control}
+            name="bio"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Bio</FormLabel>
+                <FormControl>
+                  <Textarea type="text" placeholder="Goog Bio" {...field} />
+                </FormControl>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="avatar"
+            render={({ field: { value, onChange, ...field } }) => (
+              <FormItem>
+                <FormLabel>Avatar</FormLabel>
+                <FormControl></FormControl>
+                <FormDescription>
+                  Upload your profile picture (max 5MB)
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
           <FormField
             control={form.control}
             name="avatar"
@@ -119,8 +198,8 @@ const Register = () => {
               <FormItem>
                 <FormLabel>Avatar</FormLabel>
                 <FormControl>
-                  <input 
-                    type="file" 
+                  <input
+                    type="file"
                     accept="image/*"
                     onChange={(e) => {
                       const files = e.target.files;
@@ -139,7 +218,7 @@ const Register = () => {
               </FormItem>
             )}
           />
-          
+
           <Button
             disabled={isSubmitting}
             className="w-[120px] hover:bg-[#beb8b8] py-6 rounded-full"
@@ -151,6 +230,10 @@ const Register = () => {
           </Button>
         </form>
       </Form>
+      <Divider />
+      <div className="flex w-full items-center justify-center">
+        <GoogleLogn />
+      </div>
     </main>
   );
 };
