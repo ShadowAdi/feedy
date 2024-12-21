@@ -111,33 +111,7 @@ export async function createUser({
   }
 }
 
-export const loginWithGoogle = async (): Promise<{
-  message: string;
-  success: boolean;
-  error?: any;
-  session?: any;
-}> => {
-  try {
-    const session = account.createOAuth2Session(
-      OAuthProvider.Google,
-      "https://feedy-nine.vercel.app/dashboard",
-      "https://feedy-nine.vercel.app/register"
-    );
 
-    return {
-      message: "User Login Successful",
-      success: true,
-      session: session,
-    };
-  } catch (error: any) {
-    console.error(error);
-    return {
-      message: "User Login Failed",
-      success: false,
-      error: error,
-    };
-  }
-};
 
 export const logout = async (): Promise<{
   message: string;

@@ -20,7 +20,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useGlobalContext } from "@/context/UserContext";
 import { uploadAvatar } from "@/lib/uploadFile";
 import { Divider } from "@nextui-org/divider";
-import GoogleLogn from "@/components/GoogleLogn";
+import Link from "next/link";
 
 // Define the form schema with proper types
 const formSchema = z.object({
@@ -161,7 +161,7 @@ const Register = () => {
             )}
           />
 
-<FormField
+          <FormField
             control={form.control}
             name="bio"
             render={({ field }) => (
@@ -232,7 +232,8 @@ const Register = () => {
       </Form>
       <Divider />
       <div className="flex w-full items-center justify-center">
-        <GoogleLogn />
+        <p className="text-base ">Already Have an Account</p>
+        <Link href="/login">Login</Link>
       </div>
     </main>
   );

@@ -18,15 +18,16 @@ import { Input } from "@/components/ui/input";
 import { useGlobalContext } from "@/context/UserContext";
 import { useToast } from "@/hooks/use-toast";
 import { signIn } from "@/lib/appWriteHandlers";
+import Link from "next/link";
 const formSchema = z.object({
   email: z.string().email({ message: "Should Be A Valid Email" }),
   password: z.string().min(3, { message: "Must be more than 6 characters" }),
 });
 const LoginPage = () => {
-  const {isLogged}=useGlobalContext()
+  const { isLogged } = useGlobalContext();
 
   if (isLogged) {
-    window.location.href="/dashboard"
+    window.location.href = "/dashboard";
   }
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -107,9 +108,15 @@ const LoginPage = () => {
             )}
           />
 
-          <Button disabled={isSubmitting} type="submit">Submit</Button>
+          <Button disabled={isSubmitting} type="submit">
+            Submit
+          </Button>
         </form>
       </Form>
+      <div className="flex w-full items-center justify-center">
+        <p className="text-base ">Don{"'"}t Have an Account</p>
+        <Link href="/register">Register</Link>
+      </div>
     </main>
   );
 };
